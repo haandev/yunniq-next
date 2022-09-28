@@ -5,5 +5,5 @@ export const body = zod.object({
   image: zod.string().optional(),
   className: zod.string().optional(),
   order: zod.number().optional(),
-  parentCategoryId: zod.number().optional(),
+  parentId: zod.number().optional(),
 });

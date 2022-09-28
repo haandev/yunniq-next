@@ -1,25 +1,17 @@
 import { Localizer } from "@/app";
 import { Category } from "@/model/Category";
-import { NestedChildren, RequestHandler } from "@ooic/core";
+import { RequestHandler } from "@ooic/core";
 import { schema } from ".";
-
 
 const get: RequestHandler = async (request, response, next) => {
   try {
     const { language, ...query } = schema.query.parse(request.query);
 
-    const result = await NestedChildren({
-      model: Category.scope([
-        "ordered",
-        { method: ["locale", language] },
-        { method: ["byOwner", request.authUser.id] },
-      ]),
-      subItemsKey: "subCategories",
-      createArray: true,
-      primaryKey:"id",
-      parentIdField: "parentCategoryId",
-      parentIdEntryPoint: query.parentCategoryId || null,
-    });
+    const result = await Category.getChildrenByPk(null, null, [
+      "ordered",
+      { method: ["locale", language] },
+      { method: ["byOwner", request.authUser.id] },
+    ]);
 
     if (language) {
       const localized = Localizer(result, language);
@@ -33,3 +25,4 @@ const get: RequestHandler = async (request, response, next) => {
 };
 
 export default get;
+ 

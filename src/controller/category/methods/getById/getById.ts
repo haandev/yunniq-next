@@ -8,6 +8,7 @@ const getById: RequestHandler = async (request, response, next) => {
     const instance = await Category.scope([
       { method: ["byOwner", request.authUser.id] },
     ]).findByPk(id);
+
     response.status(200).send(instance);
   } catch (error) {
     next(error);

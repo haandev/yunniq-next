@@ -31,10 +31,7 @@ const byOwnerScopeFactory = (userId: number) => ({
 Login.belongsTo(User, { foreignKey: "userId" });
 
 Category.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-Category.hasMany(Category, {
-  as: "subCategories",
-  foreignKey: "parentCategoryId",
-});
+
 Category.hasMany(Product, {
   as: "products",
   foreignKey: "categoryId",

@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ooic/core": "https://github.com/haandev/ooic-core#v0.0.3",
+    "@ooic/core": "https://github.com/haandev/ooic-core#v0.0.6",
     "@ooic/scripts": "https://github.com/haandev/ooic-scripts#1.0.2-orient",
     "bcryptjs": "^2.4.3",
     "fs": "^0.0.1-security",

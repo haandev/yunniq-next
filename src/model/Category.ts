@@ -1,8 +1,17 @@
-import { sequelize, DataTypes, Model } from "@ooic/core";
+import { sequelize, DataTypes, HierarchicalModel } from "@ooic/core";
 import { CategoryLocale } from "./CategoryLocale";
 import { Product } from "./Product";
 
-export class Category extends Model {
+/* export class LocalizedModel extends Model {
+  static isLocalized: boolean = false;
+  static localesArrayKey: string
+  static localeShortCodeKey :string
+   initLocalization(options:{
+    
+  }) 
+} */
+
+export class Category extends HierarchicalModel {
   id: number;
   locales: Array<CategoryLocale>;
   order: number;
@@ -44,3 +53,5 @@ Category.init(
     sequelize,
   }
 );
+
+Category.initHierarchy();
