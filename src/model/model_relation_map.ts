@@ -1,6 +1,8 @@
 import { FindOptions } from "sequelize/types";
 import { Category } from "./Category";
 import { CategoryLocale } from "./CategoryLocale";
+import { SmartField } from "./SmartField";
+import { SmartModel } from "./SmartModel";
 import { Login } from "./Login";
 import { Product } from "./Product";
 import { ProductLocale } from "./ProductLocale";
@@ -54,7 +56,7 @@ Slider.belongsTo(Product, { as: "product", foreignKey: "productId" });
 Slider.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
 Table.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
 
-Category.addScope("ordered",{ order: [["order", "asc"]] });
+Category.addScope("ordered", { order: [["order", "asc"]] });
 
 Category.addScope("pager", pagerScopeFactory);
 
@@ -75,3 +77,5 @@ CategoryLocale.addScope("byOwner", byOwnerScopeFactory);
 ProductLocale.addScope("byOwner", byOwnerScopeFactory);
 
 Table.addScope("byOwner", byOwnerScopeFactory);
+
+SmartField.belongsTo(SmartModel, { as: "model", foreignKey: "modelId" });

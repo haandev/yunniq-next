@@ -4,6 +4,8 @@
   "repository": "https://github.com/haandev/korri-starter.git",
   "author": "haandev",
   "scripts": {
+    "pre-setup" : "npx rimraf ./node_modules/@ooic && npx rimraf ./yarn.lock",
+    "setup" : "npm run pre-setup && yarn",
     "start": "node node_modules/@ooic/scripts/start.js",
     "start:build": "node node_modules/@ooic/scripts/start-build.js",
     "dev": "node node_modules/@ooic/scripts/dev.js",
@@ -12,8 +14,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ooic/core": "https://github.com/haandev/ooic-core#v0.0.6",
-    "@ooic/scripts": "https://github.com/haandev/ooic-scripts#1.0.2-orient",
+    "@ooic/core": "./npm-local/@ooic/core",
+    "@ooic/scripts": "./npm-local/@ooic/scripts",
     "bcryptjs": "^2.4.3",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
