@@ -4,7 +4,6 @@ export class User extends Model {
   id: number;
   username: string;
   password: string;
-  companyName:string;
 }
 
 User.init(
@@ -23,11 +22,7 @@ User.init(
     password: {
       type: DataTypes.STRING(64),
       allowNull: false,
-    },
-    companyName: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-    },
+    }
   },
   {
     defaultScope: {

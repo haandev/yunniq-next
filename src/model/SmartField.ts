@@ -1,13 +1,12 @@
-import { NativeOptionsType, SmartFieldTypeProp, SmartOptionsType } from "@/smart.types";
+import { NativeOptionsType, SmartOptionsType } from "@/smart.types";
 import { sequelize, DataTypes, Model } from "@ooic/core";
 
 export class SmartField extends Model {
   id: number;
-  type: SmartFieldTypeProp
   name: string;
+  title: string
   description: string;
   icon: string;
-  nativeOptions : NativeOptionsType
   smartOptions : SmartOptionsType
 }
 
@@ -19,7 +18,7 @@ SmartField.init(
       allowNull: false,
       primaryKey: true,
     },
-    type: {
+    title: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
@@ -35,10 +34,6 @@ SmartField.init(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    nativeOptions: {
-        type: DataTypes.JSON,
-        allowNull:false
-    },
     smartOptions: {
       type: DataTypes.JSON,
       allowNull:false
@@ -50,3 +45,4 @@ SmartField.init(
     sequelize,
   }
 );
+SmartField.sync()

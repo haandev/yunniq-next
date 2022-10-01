@@ -4,10 +4,15 @@ export class SmartModel extends Model {
   id: number;
   tableName: string;
   modelName: string;
+  singular: string;
+  plural: string;
   description: string;
   icon: string;
   isHierarchy: boolean;
+  userOwnable:boolean;
+  groupOwnable:boolean;
   sortable: boolean;
+  paranoid: boolean;
 }
 
 SmartModel.init(
@@ -26,7 +31,21 @@ SmartModel.init(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    description: {
+    singular: {
+      type: DataTypes.STRING(255),
+      get(){
+        return (this.getDataValue("singular") || this.getDataValue("modelName")).toLowerCase()
+      },
+      allowNull: true,
+    },
+    plural: {
+      type: DataTypes.STRING(255),
+      get(){
+        return (this.getDataValue("plural") || this.getDataValue("tableName")).toLowerCase()
+      },
+      allowNull: true,
+    },
+    description: { 
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -39,15 +58,31 @@ SmartModel.init(
       allowNull: false,
       defaultValue: false,
     },
+    userOwnable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    groupOwnable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     sortable: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
+      paranoid: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
   },
   {
     tableName: "smartmodel",
     sequelize,
   }
 );
-SmartModel.sync({ alter: true });
+
+SmartModel.sync();

@@ -1,5 +1,5 @@
 export { ooic } from "./app";
-export { Model } from "./init-connection";
+export { Model, ModelStatic } from "./init-connection";
 export { sequelize, DataTypes, sync, connect } from "./init-connection";
 export { initRouter } from "./init-router";
 export type { OoicConfig } from "./types";
@@ -11,4 +11,5 @@ export type { RequestHandler, ErrorRequestHandler } from "express";
 export { default as zod } from "zod";
 export { StatusCodes } from "http-status-codes";
 export type { UploadedFile } from "express-fileupload";
-export { LocalizerFactory, HierarchicalModel } from "./utils"
+export { LocalizerFactory, HierarchicalModel,clearLastLine } from "./utils"
+export const log = console.log

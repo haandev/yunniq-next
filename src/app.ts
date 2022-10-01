@@ -1,8 +1,10 @@
 import fs from "fs";
-import { OoicConfig, ooic, LocalizerFactory } from "@ooic/core";
+import { OoicConfig, ooic, LocalizerFactory, Model } from "@ooic/core";
 import { SmartModel } from "./model/SmartModel";
 import { initSmartModels } from "./initSmartModels";
-export const SmartModels = {};
+import asyncSmartModelDataSeed from "./seedSmartModelData";
+import { ModelStatic } from "../npm-local/@ooic/core";
+export const SmartModels: Array<[string,ModelStatic<any>]> = [];
 const config: OoicConfig = {
   cors: {
     enabled: true,
@@ -30,7 +32,7 @@ const config: OoicConfig = {
 (async () => {
   const app = await ooic(config);
   await initSmartModels();
-  console.log(`\n\x1B[32mSmartModels synchronized successfully.\x1B[0m  `);
+  await asyncSmartModelDataSeed();
 })();
 
 export const Localizer = LocalizerFactory({

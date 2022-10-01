@@ -9,7 +9,7 @@ const cfg = config(env);
 fs.rmSync("build-debug", { recursive: true, force: true });
 asyncAsciify("OOIC", { font: "starwars", color: "green" }).then(() => {
   const compiler = webpack(cfg, (err, stats) => {
-    if (err) console.log(err);
+    if (err) console.error(err);
   });
 });
  

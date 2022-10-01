@@ -1,14 +1,10 @@
-import { FindOptions } from "sequelize/types";
-import { Category } from "./Category";
-import { CategoryLocale } from "./CategoryLocale";
+
 import { SmartField } from "./SmartField";
 import { SmartModel } from "./SmartModel";
-import { Login } from "./Login";
-import { Product } from "./Product";
-import { ProductLocale } from "./ProductLocale";
-import { Slider } from "./Slider";
-import { Table } from "./Table";
+
 import { User } from "./User";
+import { SmartRelation } from "./SmartRelation";
+import { Login } from "./Login";
 
 const pagerScopeFactory = (params) => {
   const { pageIndex, pageSize } = params;
@@ -32,50 +28,8 @@ const byOwnerScopeFactory = (userId: number) => ({
 
 Login.belongsTo(User, { foreignKey: "userId" });
 
-Category.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-
-Category.hasMany(Product, {
-  as: "products",
-  foreignKey: "categoryId",
-  constraints: false,
-});
-Category.hasMany(CategoryLocale, { as: "locales", foreignKey: "categoryId" });
-CategoryLocale.belongsTo(Category, {
-  as: "category",
-  foreignKey: "categoryId",
-});
-CategoryLocale.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-
-Product.belongsTo(Category, { as: "category", foreignKey: "categoryId" });
-Product.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-Product.hasMany(ProductLocale, { as: "locales", foreignKey: "productId" });
-ProductLocale.belongsTo(Product, { as: "product", foreignKey: "productId" });
-ProductLocale.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-
-Slider.belongsTo(Product, { as: "product", foreignKey: "productId" });
-Slider.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-Table.belongsTo(User, { as: "owner", foreignKey: "ownerId" });
-
-Category.addScope("ordered", { order: [["order", "asc"]] });
-
-Category.addScope("pager", pagerScopeFactory);
-
-Category.addScope("byOwner", byOwnerScopeFactory);
-
-Category.addScope("locale", localeScopeFactory);
-
-Product.addScope("ordered", { order: [["order", "asc"]] });
-
-Product.addScope("pager", pagerScopeFactory);
-
-Product.addScope("locale", localeScopeFactory);
-
-Product.addScope("byOwner", byOwnerScopeFactory);
-
-CategoryLocale.addScope("byOwner", byOwnerScopeFactory);
-
-ProductLocale.addScope("byOwner", byOwnerScopeFactory);
-
-Table.addScope("byOwner", byOwnerScopeFactory);
 
 SmartField.belongsTo(SmartModel, { as: "model", foreignKey: "modelId" });
+
+SmartRelation.belongsTo(SmartModel, {as: "sourceModel", foreignKey:"sourceModelId"})
+SmartRelation.belongsTo(SmartModel, {as: "targetModel", foreignKey:"targetModelId"})
