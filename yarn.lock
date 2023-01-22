@@ -98,7 +98,13 @@
     webpack-node-externals "^3.0.0"
     zod "^3.12.1"
 
+"@ooic/router@./npm-local/@ooic/router":
+  version "1.0.0"
+
 "@ooic/scripts@./npm-local/@ooic/scripts":
+  version "1.0.0"
+
+"@ooic/utils@./npm-local/@ooic/utils":
   version "1.0.0"
 
 "@sequelize/core@^7.0.0-alpha.10":

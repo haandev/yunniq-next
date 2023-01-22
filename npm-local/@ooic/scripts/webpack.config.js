@@ -23,13 +23,13 @@ module.exports = (env) => ({
     },
   },
   externals: [nodeExternals({
-    allowlist: ['@ooic/core','@ooic/scripts'],
+    allowlist: ['@ooic/core','@ooic/scripts','@ooic/router','@ooic/utils'],
    // modulesFromFile:true,
     //modules:[]
-  })],
+  })], 
   watch: env.target === "development" && env.watch === "true",
   plugins: [
-    new Dotenv({
+    new Dotenv({ 
       path: env.target && fs.existsSync(`./.env.${env.target}`) ? `./.env.${env.target}` : ".env",
       safe: true,
       allowEmptyValues: true,

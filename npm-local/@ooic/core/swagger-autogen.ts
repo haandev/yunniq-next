@@ -39,4 +39,6 @@ export async function swaggerify(app) {
   app._router.stack.forEach((r, i) => {
     recursivePath(r);
   });
+
+  console.log(routes)
 }

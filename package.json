@@ -18,6 +18,8 @@
   "dependencies": {
     "@ooic/core": "./npm-local/@ooic/core",
     "@ooic/scripts": "./npm-local/@ooic/scripts",
+    "@ooic/router": "./npm-local/@ooic/router",
+    "@ooic/utils": "./npm-local/@ooic/utils",
     "@types/chalk": "^2.2.0",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.0.1",

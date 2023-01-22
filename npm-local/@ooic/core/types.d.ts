@@ -11,12 +11,18 @@ type SSLEnabled = {
 type SSLDisabled = {
   enabled?: false;
 };
-type MorganEnabled<MorganReq extends http.IncomingMessage = http.IncomingMessage, MorganRes extends http.ServerResponse = http.ServerResponse> = {
+type MorganEnabled<
+  MorganReq extends http.IncomingMessage = http.IncomingMessage,
+  MorganRes extends http.ServerResponse = http.ServerResponse
+> = {
   enabled: true;
-  format: string | "combined" | "common" | "dev" | "short" | "tiny"
+  format: string | "combined" | "common" | "dev" | "short" | "tiny";
   options?: morgan.Options<MorganReq, MorganRes>;
 };
-type MorganDisabled<MorganReq extends http.IncomingMessage = http.IncomingMessage, MorganRes extends http.ServerResponse = http.ServerResponse> = {
+type MorganDisabled<
+  MorganReq extends http.IncomingMessage = http.IncomingMessage,
+  MorganRes extends http.ServerResponse = http.ServerResponse
+> = {
   enabled?: false;
 };
 export declare interface OoicConfig<
@@ -36,3 +42,4 @@ export declare interface OoicConfig<
   };
   ssl?: SSLEnabled | SSLDisabled;
 }
+

@@ -5,9 +5,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import fileUpload from "express-fileupload";
 import { OoicConfig } from "./types";
-import { initRouter } from "./init-router";
+import router from "@ooic/router";
 import { initErrorHandlers } from "./init-error-handlers";
 import { connect, sync } from "./init-connection";
 import { queryParser } from "express-query-parser";
@@ -22,10 +21,7 @@ export async function ooic(config: OoicConfig) {
   config.morgan?.enabled &&
     process.env.NODE_ENV === "development" &&
     app.use(morgan(config.morgan.format, config.morgan.options));
-  config.cookieParser?.enabled &&
-    app.use(
-      cookieParser(config.cookieParser.secret, config.cookieParser.options)
-    );
+  config.cookieParser?.enabled && app.use(cookieParser(config.cookieParser.secret, config.cookieParser.options));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("public"));
   app.use(express.json());
@@ -39,14 +35,12 @@ export async function ooic(config: OoicConfig) {
   );
 
   await connect();
-  await initRouter(app);
+  await router(app, "src/router");
   try {
     if (fs.existsSync("src/model/model_relation_map.ts")) {
       await import("./../../../src/model/model_relation_map");
     } else {
-      console.warn(
-        "Missing model relation mapper. Please put 'model_relation_map.ts' in src/model directory."
-      );
+      console.warn("Missing model relation mapper. Please put 'model_relation_map.ts' in src/model directory.");
     }
   } catch (err) {}
   await initErrorHandlers(app);
@@ -62,18 +56,16 @@ export async function ooic(config: OoicConfig) {
   if (process.env.NODE_ENV === "development") {
     http.createServer(app).listen(process.env.PORT || process.env.APP_PORT);
     log(
-      `\nWelcome to ${packageJson.name} v${
-        packageJson.version
-      }! Listening on port ${process.env.PORT || process.env.APP_PORT}` +
+      `\nWelcome to ${packageJson.name} v${packageJson.version}! Listening on port ${
+        process.env.PORT || process.env.APP_PORT
+      }` +
         `\nRunning on environment: ${process.env.NODE_ENV}` +
         `\nhttp://localhost:${process.env.PORT || process.env.APP_PORT}`
     );
   } else {
     http.createServer(app).listen(process.env.PORT || process.env.APP_PORT);
     config.ssl?.enabled &&
-      https
-        .createServer({ cert: config.ssl.cert, key: config.ssl.key }, app)
-        .listen(process.env.SECURE_PORT);
+      https.createServer({ cert: config.ssl.cert, key: config.ssl.key }, app).listen(process.env.SECURE_PORT);
     log(
       `\nWelcome to ${packageJson.name} v${packageJson.version}! Listening on port ${process.env.PORT} and ${process.env.SECURE_PORT}` +
         `\nRunning on environment: ${process.env.NODE_ENV}`

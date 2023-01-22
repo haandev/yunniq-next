@@ -3,7 +3,6 @@
     "prefix": "rhm",
     "body": [
       "import { RequestHandler } from \"@ooic/core\";",
-      "import { schema } from \".\";",
       "",
       "const ${TM_FILENAME_BASE}: RequestHandler = async (request, response, next) => {",
       "  try {",
@@ -46,24 +45,32 @@
     ],
     "description": "Sequelize Model"
   },
-  "Standart Router": {
+  "Standard router": {
     "prefix": "rou",
     "body": [
-      "import { Router } from \"@ooic/core\";",
+      "import { Router, RequestValidationCtor, RequestSchemaType, zod } from \"@ooic/core\";",
+      "import handlers from \"@/handlers\";",
+      "",
       "const router = Router();",
       "",
-      "import * as ${TM_FILENAME_BASE} from \"@/controller/${TM_FILENAME_BASE}\";",
+      "const schema: RequestSchemaType = {",
+      "  body: zod.object({",
+      "    ${1:/* request body validation */}",
+      "  }),",
+      "  query: zod.object({",
+      "    ${2:/* request query validation */}",
+      "  }),",
+      "  params: zod.object({",
+      "    ${3:/* request params validation */}",
+      "    //id: zod.string().regex(/^\\d+$/).transform(Number),",
+      "  }),",
+      "};",
       "",
-      "router.post(\"/\", ${TM_FILENAME_BASE}.create);",
-      "router.put(\"/:id\", ${TM_FILENAME_BASE}.update);",
-      "router.get(\"/\", ${TM_FILENAME_BASE}.get);",
-      "router.get(\"/:id\", ${TM_FILENAME_BASE}.getById);",
-      "router.delete(\"/:id\", ${TM_FILENAME_BASE}.destroy);",
+      "router.post(\"/${TM_FILENAME_BASE}\", RequestValidationCtor(schema), ${4:/* request handler */});",
       "",
-      "export default router;",
       ""
     ],
-    "description": "Standart Router"
+    "description": "Standard router"
   },
   "Export Controller Method": {
     "prefix": "excm",
@@ -114,4 +121,7 @@
     ],
     "description": "Error handler middleware"
   }
+
+
+
 }

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { toKebabCase } from "./utils";
+import { toKebabCase } from "@ooic/utils";
 import { Express } from "express";
 export const initErrorHandlers = async (app: Express) => {
   const ErrorHandlers = {};
